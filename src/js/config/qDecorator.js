@@ -7,8 +7,6 @@ define(['es-ui'], function (app) {
     return app.config([
     '$stateProvider', '$urlRouterProvider', '$httpProvider', '$provide',
     function ($stateProvider, $urlRouterProvider, $httpProvider, $provide) {
-
-        // http://jsfiddle.net/Zenuka/pHEf9/
         $provide.decorator('$q', ['$delegate', function ($delegate) {
             var $q = $delegate;
 

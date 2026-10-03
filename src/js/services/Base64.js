@@ -2,7 +2,6 @@
 define(['./_module'], function (app) {
 
     'use strict';
-    // http://wemadeyoulook.at/en/blog/implementing-basic-http-authentication-http-requests-angular/
     return app.factory('Base64', [ 'MessageService', function (msg) {
         var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 

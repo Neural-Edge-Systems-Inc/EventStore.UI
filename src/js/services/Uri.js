@@ -8,7 +8,6 @@ define(['./_module'], function (app) {
 
         function unserialize (query) {
             var params = {};
-            // http://stevenbenner.com/2010/03/javascript-regex-trick-parse-a-query-string-into-an-object/
             var rex = new RegExp('([^?=&]+)(=([^&]*))?', 'g');
             query.replace(rex, function($0, $1, $2, $3) {
                 params[$1] = $3;
