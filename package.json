@@ -1,35 +1,30 @@
 {
   "name": "EventStore-UI",
-  "description": "The new user interface for Event Store",
-  "homepage": "https://eventstore.com",
+  "description": "Embedded administration UI for the Neural Edge maintained EventStoreDB BSD fork",
   "version": "4.1.1",
   "type": "module",
   "contributors": [
     {
-      "name": "Jakub Gutkowski",
-      "web": "https://github.com/gutek"
+      "name": "Jakub Gutkowski"
     },
     {
-      "name": "James Nuget",
-      "web": "https://github.com/jen20"
+      "name": "James Nuget"
     },
     {
-      "name": "Pieter Germishuys",
-      "web": "https://github.com/pgermishuys"
+      "name": "Pieter Germishuys"
     }
   ],
   "maintainers": [
     {
-      "name": "EventStore",
-      "web": "https://github.com/EventStore?tab=members"
+      "name": "Neural Edge Systems Inc."
     }
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/EventStore/EventStore.UI.git"
+    "url": "git@github.com:Neural-Edge-Systems-Inc/EventStore.UI.git"
   },
   "bugs": {
-    "url": "https://github.com/EventStore/EventStore.UI/issues"
+    "url": "https://github.com/Neural-Edge-Systems-Inc/EventStore.UI/issues"
   },
   "license": "BSD-3-Clause",
   "engines": {

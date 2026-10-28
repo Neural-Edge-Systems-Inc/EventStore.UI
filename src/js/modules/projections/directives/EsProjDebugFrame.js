@@ -11,8 +11,6 @@ define(['./_module'], function (app) {
 			elem.parentNode.removeChild(elem);
 		}
     }
-
-    // http://stackoverflow.com/questions/6248666/how-to-generate-short-uid-like-ax4j9z-in-js
 	/*function generateUIDNotMoreThan1million() {
 		return ('0000' + (Math.random()*Math.pow(36,4) << 0).toString(36)).substr(-4);
 	}*/
