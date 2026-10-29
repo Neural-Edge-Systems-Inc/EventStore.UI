@@ -28,7 +28,7 @@
   },
   "license": "BSD-3-Clause",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">=18.12.1"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
@@ -48,6 +48,7 @@
     "jshint": "^2.13.6",
     "jshint-stylish": "~2.2.1",
     "merge-stream": "^1.0.1",
-    "sass": "^1.56.1"
+    "sass": "^1.56.1",
+    "browser-sync": "^3.0.4"
   }
 }

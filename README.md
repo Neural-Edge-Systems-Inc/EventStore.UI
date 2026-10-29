@@ -28,11 +28,7 @@ gulp dist
 
 The generated distribution is written to `es-dist`.
 
-The historical `gulp connect` / `gulp connectDist` development server was removed because its abandoned dependency chain contained critical vulnerabilities. For browser testing, serve `src` or `es-dist` with a maintained local static-file server. For example, where Python 3 is available:
-
-```text
-python3 -m http.server 8000 --directory es-dist
-```
+The `gulp connect` and `gulp connectDist` development commands are retained using BrowserSync 3 instead of the abandoned `gulp-webserver` dependency. They provide a local static server, automatic browser opening outside CI, and live reload on file changes. `gulp connect` serves `src` on port 8000; `gulp connectDist` serves `es-dist` on port 8001.
 
 The image-minification build dependencies were also removed. Maintained image assets are checked in already optimized and are copied directly into `es-dist`, avoiding vulnerable archive/XML processing dependencies during the build.
 

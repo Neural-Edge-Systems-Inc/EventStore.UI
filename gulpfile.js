@@ -15,7 +15,27 @@ import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 import runSequence from 'gulp4-run-sequence';
 import merge from 'merge-stream';
+import browserSync from 'browser-sync';
 const sass = gulpSass(dartSass);
+
+const srcServer = browserSync.create('eventstore-ui-src');
+const distServer = browserSync.create('eventstore-ui-dist');
+
+function startDevServer(instance, baseDir, port) {
+    return function serve(done) {
+        instance.init({
+            server: {
+                baseDir: baseDir,
+                directory: false
+            },
+            files: [baseDir + '/**/*'],
+            port: port,
+            open: process.env.CI ? false : true,
+            notify: false,
+            ui: false
+        }, done);
+    };
+}
 
 var paths = {
     app: {
@@ -247,5 +267,9 @@ gulp.task('watch-lint', function () {
 });
 
 
+
+
+gulp.task('connect', startDevServer(srcServer, 'src', 8000));
+gulp.task('connectDist', startDevServer(distServer, 'es-dist', 8001));
 
 gulp.task('default', gulp.series('dev'));
