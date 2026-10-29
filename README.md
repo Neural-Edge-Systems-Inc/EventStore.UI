@@ -28,6 +28,14 @@ gulp dist
 
 The generated distribution is written to `es-dist`.
 
+The historical `gulp connect` / `gulp connectDist` development server was removed because its abandoned dependency chain contained critical vulnerabilities. For browser testing, serve `src` or `es-dist` with a maintained local static-file server. For example, where Python 3 is available:
+
+```text
+python3 -m http.server 8000 --directory es-dist
+```
+
+The image-minification build dependencies were also removed. Maintained image assets are checked in already optimized and are copied directly into `es-dist`, avoiding vulnerable archive/XML processing dependencies during the build.
+
 ## Support and security
 
 Issues for this fork belong in the Neural Edge repositories. Do not send support or vulnerability reports for this fork to Kurrent/Event Store channels.

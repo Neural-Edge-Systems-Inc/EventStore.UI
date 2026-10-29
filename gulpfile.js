@@ -9,11 +9,8 @@ import jshint from 'gulp-jshint';
 import cache from 'gulp-cached';
 import terser from 'gulp-terser';
 import minifyCSS from 'gulp-minify-css';
-import imagemin from 'gulp-imagemin';
-import pngcrush from 'imagemin-pngcrush';
 import rjs from 'gulp-requirejs';
 import htmlreplace from 'gulp-html-replace';
-import webserver from 'gulp-webserver';
 import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 import runSequence from 'gulp4-run-sequence';
@@ -108,24 +105,12 @@ gulp.task('dist-min-css', function () {
         .pipe(gulp.dest('./es-dist/css/'));
 });
 
-gulp.task('dist-min-images', async function () {
-
-    // minify images and copy
-    gulp.src('./src/images/*')
-    .pipe(imagemin({
-        progressive: true,
-        svgoPlugins: [{removeViewBox: false}],
-        use: [pngcrush()]
-    }))
-    .pipe(gulp.dest('./es-dist/images/'));
-
-    gulp.src('./src/*.png')
-    .pipe(imagemin({
-        progressive: true,
-        svgoPlugins: [{removeViewBox: false}],
-        use: [pngcrush()]
-    }))
-    .pipe(gulp.dest('./es-dist/'));
+gulp.task('dist-copy-images', function () {
+    // Copy the checked-in image assets without invoking legacy image-minification toolchains.
+    return merge(
+        gulp.src('./src/images/*').pipe(gulp.dest('./es-dist/images/')),
+        gulp.src('./src/*.png').pipe(gulp.dest('./es-dist/'))
+    );
 });
 
 gulp.task('dist-copy-fonts', function () {
@@ -164,7 +149,7 @@ gulp.task('dist-js', async function () {
 gulp.task('dist', async function() {
     runSequence(
         ['html', 'compile-sass'],
-        ['dist-min-css', 'dist-min-images', 'dist-js', 'dist-copy-fonts'],
+        ['dist-min-css', 'dist-copy-images', 'dist-js', 'dist-copy-fonts'],
         function(){
             return gulp.src('./src/index.html')
             .pipe(htmlreplace({
@@ -261,26 +246,6 @@ gulp.task('watch-lint', function () {
     gulp.watch(paths.all, gulp.series('lint'));
 });
 
-
-gulp.task('connect', function() {
-  gulp.src('src')
-    .pipe(webserver({
-      livereload: true,
-      directoryListing: false,
-      open: true,
-      port: 8000
-    }));
-});
-
-gulp.task('connectDist', function() {
-  gulp.src('es-dist')
-    .pipe(webserver({
-      livereload: true,
-      directoryListing: false,
-      open: true,
-      port: 8001
-    }));
-});
 
 
 gulp.task('default', gulp.series('dev'));
