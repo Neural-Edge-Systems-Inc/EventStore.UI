@@ -1,26 +1,47 @@
-name: CI
+name: Verify maintained BSD UI
+
 on:
   push:
-    branches: [master]
+    branches: [main, 'security/**']
   pull_request:
-    branches: [master]
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
 jobs:
-  build:
-    name: Build UI
-    runs-on: ubuntu-22.04
+  verify:
+    name: Audit, lint and build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup node
-        uses: actions/setup-node@v3
+      - name: Checkout maintained UI
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          node-version: 18.12.1
-      - name: Packaging
-        run: |
-          npm install bower@~1.8.14 -g
-          bower install
-          npm install gulp@~4.0.0 -g
-          npm install
-          gulp dist
-          mv es-dist clusternode-web
-          zip -r EventStore.OSS.UI-v${{ steps.release.outputs.version}}.zip clusternode-web
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --no-fund
+      - name: Check all npm advisories
+        run: npm audit --audit-level=low
+      - name: Lint application source
+        run: npm run lint
+      - name: Install locked browser dependencies
+        run: npm run deps:browser
+      - name: Build distribution
+        run: npm run build
+      - name: Check generated distribution
+        run: npm run verify:dist
+      - name: Retain tested UI distribution
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: eventstore-ui-${{ github.sha }}
+          path: es-dist/
+          retention-days: 14
+          if-no-files-found: error

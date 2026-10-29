@@ -14,6 +14,6 @@ The initial audit reported five critical npm dependency findings. They were elim
 - Removed `gulp-imagemin` and `imagemin-pngcrush`, which eliminated the vulnerable `fast-xml-parser` and `decompress` dependency paths. Image assets are now copied directly during the build.
 - The already-optimized SVG assets from the validated embedded UI were checked into the maintained UI source so the dependency-free image-copy step reproduces the same distribution files.
 
-After this remediation, `npm audit` reports **0 critical** findings. The current npm development dependency graph still reports **31 findings: 2 low, 7 moderate, 22 high, 0 critical**. Those remaining findings require a separate dependency-modernization pass.
+After the subsequent dependency modernization, the currently locked npm development dependency graph reports **0 vulnerabilities at every severity** (audit run on Node.js 24). Gulp 5, ESLint 10, patched Lodash and modern HTML/CSS minifiers replace the affected legacy toolchain. This is a snapshot of the advisory database, not a permanent security guarantee; CI runs `npm audit --audit-level=low` on every maintained branch and nightly build.
 
 The Bower-delivered browser dependencies also require their own runtime security review because `npm audit` does not cover them. Until that review and the remaining npm modernization are complete, build the UI in an isolated container and do not interpret a successful build as a claim that the historical frontend dependency set is fully hardened.

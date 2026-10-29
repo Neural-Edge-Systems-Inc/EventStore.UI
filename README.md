@@ -18,15 +18,17 @@ The EventStoreDB 24.6 source tree historically pinned an older UI commit, `4175f
 
 ## Building
 
-The baseline build uses Node.js 18.12.1, Gulp 4, and Bower for the remaining browser dependencies. Build it in an isolated container or other reproducible environment.
+The maintained build uses Node.js 24 LTS, Gulp 5, ESLint 10, and Bower for the remaining browser dependencies. Build it in an isolated container or other reproducible environment. The exact Node.js patch release is pinned in `.node-version`.
 
 ```text
-npm install
-bower install
-gulp dist
+npm ci
+npm audit --audit-level=low
+npm run lint
+npm run deps:browser
+npm run build
 ```
 
-The generated distribution is written to `es-dist`.
+The generated distribution is written to `es-dist`. The old JSHint workflow is now backed by ESLint 10 while preserving the `gulp lint` task and file-watch workflow. The old Gulp HTML/CSS minifier wrappers have been replaced by maintained minifier libraries. Minifier output may differ in byte representation even when the application source is unchanged.
 
 The `gulp connect` and `gulp connectDist` development commands are retained using BrowserSync 3 instead of the abandoned `gulp-webserver` dependency. They provide a local static server, automatic browser opening outside CI, and live reload on file changes. `gulp connect` serves `src` on port 8000; `gulp connectDist` serves `es-dist` on port 8001.
 
@@ -36,4 +38,4 @@ The image-minification build dependencies were also removed. Maintained image as
 
 Issues for this fork belong in the Neural Edge repositories. Do not send support or vulnerability reports for this fork to Kurrent/Event Store channels.
 
-See `PROVENANCE.md`, `SECURITY.md`, and `LICENSE.md`.
+See `PROVENANCE.md`, `SECURITY.md`, and `LICENSE.md`. Continuous integration on `main`, pull requests, maintained branches and nightly builds runs npm auditing, linting, and the complete UI distribution build. Tags produce CI build artifacts, not automatic vendor-hosted releases.
