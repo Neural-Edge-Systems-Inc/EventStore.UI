@@ -13,7 +13,7 @@
     "angular-ui-router": "https://github.com/angular-ui/angular-ui-router-bower.git#2b8d5241b4c631ca2aef079bb96690b213eff449",
     "angular-ui-utils": "https://github.com/angular-ui/ui-utils.git#e25586548ff0a61df63bd4eb8fdc0715b1a87e72",
     "jQuery": "https://github.com/jquery/jquery.git#7751e69b615c6eca6f783a81e292a55725af6b85",
-    "requirejs": "https://github.com/jrburke/requirejs-bower.git#9cd0b99417eac61e890d11c5119f2e45e752c999",
+    "requirejs": "https://github.com/jrburke/requirejs-bower.git#776a173c5922518970cbb9599cd51876a4df3428",
     "requirejs-domready": "https://github.com/requirejs/domReady.git#c74caaa6dac64f2f47093f4952b991390406adfb",
     "sizzle": "https://github.com/jquery/sizzle.git#f0ce95aa468c57b1799a498d1ed90f4b9564c5fb",
     "sprintf": "https://github.com/alexei/sprintf.js.git#38433b4073d14a7b1537a72292071b1e70f35bee"
@@ -30,7 +30,7 @@
       "angular-ui-router": "0.2.18",
       "angular-ui-utils": "0.1.1",
       "jQuery": "2.1.4",
-      "requirejs": "2.1.22",
+      "requirejs": "2.3.8",
       "requirejs-domready": "2.0.1",
       "sizzle": "2.0.0",
       "sprintf": "1.0.3"
@@ -46,7 +46,7 @@
     "angular-ui-router": "2b8d5241b4c631ca2aef079bb96690b213eff449",
     "angular-ui-utils": "e25586548ff0a61df63bd4eb8fdc0715b1a87e72",
     "jQuery": "7751e69b615c6eca6f783a81e292a55725af6b85",
-    "requirejs": "9cd0b99417eac61e890d11c5119f2e45e752c999",
+    "requirejs": "776a173c5922518970cbb9599cd51876a4df3428",
     "requirejs-domready": "c74caaa6dac64f2f47093f4952b991390406adfb",
     "sizzle": "f0ce95aa468c57b1799a498d1ed90f4b9564c5fb",
     "sprintf": "38433b4073d14a7b1537a72292071b1e70f35bee"
