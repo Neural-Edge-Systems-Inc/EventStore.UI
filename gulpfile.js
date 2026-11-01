@@ -10,7 +10,7 @@ import rjs from 'gulp-requirejs';
 import htmlreplace from 'gulp-html-replace';
 import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
-import browserSync from 'browser-sync';
+import { createServer } from 'vite';
 import { Transform } from 'node:stream';
 import { ESLint } from 'eslint';
 import htmlMinifier from 'html-minifier-terser';
@@ -47,22 +47,27 @@ function minifyCSS() {
     });
 }
 
-const srcServer = browserSync.create('eventstore-ui-src');
-const distServer = browserSync.create('eventstore-ui-dist');
-
-function startDevServer(instance, baseDir, port) {
-    return function serve(done) {
-        instance.init({
+// Keep the old `gulp connect` and `gulp connectDist` workflows without the
+// BrowserSync/resp-modifier -> unpatched minimatch dependency chain.
+// Vite is a development-only HTTP server; production UI output still comes
+// from the existing Gulp distribution build, not Vite bundling.
+function startDevServer(baseDir, port) {
+    return async function serve() {
+        const server = await createServer({
+            configFile: false,
+            root: baseDir,
+            appType: 'mpa',
             server: {
-                baseDir: baseDir,
-                directory: false
-            },
-            files: [baseDir + '/**/*'],
-            port: port,
-            open: process.env.CI ? false : true,
-            notify: false,
-            ui: false
-        }, done);
+                host: '127.0.0.1',
+                port,
+                strictPort: true,
+                open: !process.env.CI
+            }
+        });
+        await server.listen();
+        server.printUrls();
+        // The listener keeps Gulp alive until Ctrl+C; close it on termination.
+        process.once('SIGTERM', () => { void server.close(); });
     };
 }
 
@@ -279,8 +284,8 @@ gulp.task('watch-lint', function (done) {
 
 
 
-gulp.task('connect', startDevServer(srcServer, 'src', 8000));
-gulp.task('connectDist', startDevServer(distServer, 'es-dist', 8001));
+gulp.task('connect', startDevServer('src', 8000));
+gulp.task('connectDist', startDevServer('es-dist', 8001));
 
 // Gulp 5 must wait for the generated templates and assets before producing index.html.
 gulp.task('dist', gulp.series(

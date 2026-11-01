@@ -30,7 +30,9 @@ npm run build
 
 The generated distribution is written to `es-dist`. The old JSHint workflow is now backed by ESLint 10 while preserving the `gulp lint` task and file-watch workflow. The old Gulp HTML/CSS minifier wrappers have been replaced by maintained minifier libraries. Minifier output may differ in byte representation even when the application source is unchanged.
 
-The `gulp connect` and `gulp connectDist` development commands are retained using BrowserSync 3 instead of the abandoned `gulp-webserver` dependency. They provide a local static server, automatic browser opening outside CI, and live reload on file changes. `gulp connect` serves `src` on port 8000; `gulp connectDist` serves `es-dist` on port 8001.
+The `gulp connect` and `gulp connectDist` development commands are retained using Vite 8 instead of the legacy BrowserSync/`gulp-webserver` dependency chains. They provide a loopback-only local static server, automatic browser opening outside CI, and live reload on file changes. `gulp connect` serves `src` on port 8000; `gulp connectDist` serves `es-dist` on port 8001. The production distribution remains built by Gulp, not Vite.
+
+Sass is pinned to 1.56.1 for this maintenance checkpoint because later versions change generated CSS colour representation; any Sass modernization needs a separate browser-regression review.
 
 The image-minification build dependencies were also removed. Maintained image assets are checked in already optimized and are copied directly into `es-dist`, avoiding vulnerable archive/XML processing dependencies during the build.
 
