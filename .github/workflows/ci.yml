@@ -30,6 +30,8 @@ jobs:
         run: npm ci --no-fund
       - name: Check all npm advisories
         run: npm audit --audit-level=low
+      - name: Verify browser route and URL safety contracts
+        run: npm run test:contract-routes
       - name: Lint application source
         run: npm run lint
       - name: Install locked browser dependencies
